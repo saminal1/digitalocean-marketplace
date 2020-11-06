@@ -33,6 +33,10 @@
     },
     {
       "type": "shell",
+      "environment_vars": [
+        "DEBIAN_FRONTEND=noninteractive",
+        "DEBCONF_NONINTERACTIVE_SEEN=true"
+      ],
       "scripts": [
         "scripts/01-setup.sh",
         "scripts/90-cleanup.sh",
