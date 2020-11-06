@@ -1,0 +1,42 @@
+{
+  "variables": {
+    "token": "{{env `DIGITALOCEAN_TOKEN`}}",
+    "image_name": "csmm-snapshot-{{timestamp}}"
+  },
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu",
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "files/etc/",
+      "destination": "/etc/"
+    },
+    {
+      "type": "file",
+      "source": "files/var/",
+      "destination": "/var/"
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/01-setup.sh",
+        "scripts/90-cleanup.sh",
+        "scripts/99-img_check.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-import",
+        "repository": "gavin",
+        "tag": "latest"
+      }
+    ]
+  ]
+}
