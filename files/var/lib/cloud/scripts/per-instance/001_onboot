@@ -15,8 +15,10 @@ debian_sys_maint_mysql_pass=$(openssl rand -hex 24)
 csmm_mysql_pass=$(openssl rand -hex 24)
 
 # Save the passwords
-cat > /root/.digitalocean_password <<EOM
-root_mysql_pass="${root_mysql_pass}"
+cat > /root/.my.cnf <<EOM
+[client]
+user=mysqluser
+password=${root_mysql_pass}
 EOM
 
 mysqladmin -u root -h localhost password ${root_mysql_pass}
@@ -66,12 +68,13 @@ EOM
 
 mysql -uroot -p${root_mysql_pass} <<EOM
 CREATE DATABASE csmm;
-CREATE USER 'csmm'@'localhost' IDENTIFIED WITH BY '${csmm_mysql_pass}';
+CREATE USER 'csmm'@'localhost' IDENTIFIED BY '${csmm_mysql_pass}';
 GRANT ALL PRIVILEGES ON csmm.* TO 'csmm'@'localhost';
 FLUSH PRIVILEGES;
 EOM
 
 cat > /etc/csmm_version <<EOM
 CSMM_VERSION=1.19.2
-DBSTRING=mysql2://csmm:${csmm_mysql_pass}@localhost:3306/csmm
+DBSTRING=mysql2://csmm:${csmm_mysql_pass}@127.0.0.1:3306/csmm
+REDISSTRING=redis://127.0.0.1:6379
 EOM

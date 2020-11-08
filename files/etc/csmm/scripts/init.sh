@@ -9,8 +9,8 @@ DISCORDBOTTOKEN=
 DISCORDCLIENTSECRET=
 DISCORDCLIENTID=
 LETSENCRYPT_EMAIL=
-DBSTRING=mysql2://csmm:@localhost:3306/csmm
-REDISSTRING=redis://localhost:6379
+DBSTRING=
+REDISSTRING=
 
 whiptail --title "CSMM One Click Installer" --infobox "Welcome to CSMM one-click installer.\nThis script will ask you a bunch of questions, and then do the final configuration." 8 78
 
@@ -61,7 +61,7 @@ systemctl restart nginx
 mkdir -p /var/www/_letsencrypt
 chown www-data /var/www/_letsencrypt
 
-certbot certonly --webroot -d "${CSMM_DOMAIN}" --email "${LETSENCRYPT_EMAIL}" -n --agree-tos --force-renewal --webroot-path /var/www/_letsencrypt/
+certbot certonly --webroot -d "${CSMM_DOMAIN}" --email "${LETSENCRYPT_EMAIL}" -n --agree-tos --force-renewal --webroot-path /var/www/_letsencrypt/ --staging
 
 # reconfigure nginx with letsencrypt
 openssl dhparam -out /etc/nginx/dhparam.pem 2048
@@ -128,8 +128,8 @@ DISCORDBOTTOKEN=${DISCORDBOTTOKEN}
 DISCORDCLIENTSECRET=${DISCORDCLIENTSECRET}
 DISCORDCLIENTID=${DISCORDCLIENTID}
 
-DBSTRING=mysql2://csmm:mysecretpasswordissosecure@db:3306/csmm
-REDISSTRING=redis://localhost:6379
+DBSTRING=${DBSTRING}
+REDISSTRING=${REDISSTRING}
 EOF
 
 systemctl restart nginx
