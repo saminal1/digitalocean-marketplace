@@ -6,9 +6,13 @@ ufw allow https
 ufw allow http
 ufw --force enable
 
+# force restart of systemd-journal which doesn't seem to output anything without it
+killall -HUP systemd-journald
+
 #Generate Mysql root password.
 root_mysql_pass=$(openssl rand -hex 24)
 debian_sys_maint_mysql_pass=$(openssl rand -hex 24)
+csmm_mysql_pass=$(openssl rand -hex 24)
 
 # Save the passwords
 cat > /root/.digitalocean_password <<EOM
@@ -59,16 +63,15 @@ password = ${debian_sys_maint_mysql_pass}
 socket   = /var/run/mysqld/mysqld.sock
 EOM
 
-DOMAIN=csmm.example.com
-while [ "$DOMAIN" != "csmm.example.com" ] || [ -z "$DOMAIN" ]; do
-  DOMAIN=$(whiptail --inputbox 'What domain name do you want to use? Example, csmm.example.com' --title 'Domain Name' 8 78 $DOMAIN  3>&1 1>&2 2>&3)
-done
 
-# Setup letsencrypt
-openssl dhparam -out /etc/nginx/dhparam.pem 2048
-mkdir -p /var/www/_letsencrypt
-chown www-data /var/www/_letsencrypt
-certbot certonly --webroot -d csmm.example.com --email info@csmm.example.com -w /var/www/_letsencrypt -n --agree-tos --force-renewal
+mysql -uroot -p${root_mysql_pass} <<EOM
+CREATE DATABASE csmm;
+CREATE USER 'csmm'@'localhost' IDENTIFIED WITH BY '${csmm_mysql_pass}';
+GRANT ALL PRIVILEGES ON csmm.* TO 'csmm'@'localhost';
+FLUSH PRIVILEGES;
+EOM
 
-systemctl enable nginx
-systemctl restart nginx
+cat > /etc/csmm_version <<EOM
+CSMM_VERSION=1.19.2
+DBSTRING=mysql2://csmm:${csmm_mysql_pass}@localhost:3306/csmm
+EOM
