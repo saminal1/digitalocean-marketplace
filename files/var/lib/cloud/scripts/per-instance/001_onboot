@@ -74,7 +74,8 @@ FLUSH PRIVILEGES;
 EOM
 
 cat > /etc/csmm_version <<EOM
-CSMM_VERSION=1.19.2
+#CSMM_VERSION=v1.19.2
+CSMM_VERSION=latest
 DBSTRING=mysql2://csmm:${csmm_mysql_pass}@127.0.0.1:3306/csmm
 REDISSTRING=redis://127.0.0.1:6379
 EOM

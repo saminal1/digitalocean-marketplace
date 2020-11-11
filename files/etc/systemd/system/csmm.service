@@ -12,15 +12,15 @@ ExecStartPre=-/usr/bin/docker stop csmm
 ExecStartPre=-/usr/bin/docker rm -f csmm
 ExecStop=/usr/bin/docker stop csmm
 SyslogIdentifier=csmm
-ExecStartPre=-/usr/bin/docker pull catalysm/csmm:v${CSMM_VERSION}
-ExecStartPre=-/usr/bin/docker run --rm --net=host --env-file /etc/csmm_version -e NODE_ENV=production --entrypoint "" catalysm/csmm:v${CSMM_VERSION} npm run db:migrate
+ExecStartPre=-/usr/bin/docker pull catalysm/csmm:${CSMM_VERSION}
+ExecStartPre=-/usr/bin/docker run --rm --net=host --env-file /etc/csmm_version -e NODE_ENV=production --entrypoint "" catalysm/csmm:${CSMM_VERSION} npm run db:migrate
 ExecStart=/usr/bin/docker run \
   --publish ${CSMM_PORT}:${CSMM_PORT} \
   -e NODE_ENV=production \
   --name=csmm \
   --env-file /etc/csmm_version \
   --net=host \
-  catalysm/csmm:v${CSMM_VERSION}
+  catalysm/csmm:${CSMM_VERSION}
 
 [Install]
 WantedBy=docker.service

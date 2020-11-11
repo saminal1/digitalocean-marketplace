@@ -18,5 +18,4 @@ ufw allow http
 ufw --force enable
 
 chmod +x /etc/csmm/scripts/init.sh
-echo '/etc/csmm/scripts/init.sh' >> /root/.bashrc
-echo 'cp /etc/skel/.bashrc /root/.bashrc' >> /root/.bashrc
+echo '/etc/csmm/scripts/init.sh && cp /etc/skel/.bashrc /root/.bashrc' >> /root/.bashrc
