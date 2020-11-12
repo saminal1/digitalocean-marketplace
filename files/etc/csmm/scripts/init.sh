@@ -16,7 +16,7 @@ c=$(( c < 70 ? 70 : c ))
 
 
 # pre-define all the variables we use
-CSMM_VERSION=latest
+CSMM_VERSION=
 CSMM_DOMAIN=csmm.example.com
 API_KEY_STEAM=
 DISCORDOWNERIDS=
