@@ -19,3 +19,6 @@ ufw --force enable
 
 chmod +x /etc/csmm/scripts/init.sh
 echo '/etc/csmm/scripts/init.sh && cp /etc/skel/.bashrc /root/.bashrc' >> /root/.bashrc
+
+#CSMM_VERSION=$(wget -q https://registry.hub.docker.com/v1/repositories/catalysm/csmm/tags -O - | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n' | awk -F: '{print $3}' | egrep '^v[0-9]' | sort -V | tail -1)
+perl -pi -e "s/%CSMM_VERSION%/${CSMM_VERSION}/g" /var/lib/cloud/scripts/per-instance/001_onboot
