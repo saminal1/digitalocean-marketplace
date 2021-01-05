@@ -33,7 +33,7 @@ CSMM_DONATOR_TIER=patron
 CSMM_LOGLEVEL=info
 CSMM_PORT=1337
 
-whiptail --title "CSMM One Click Installer" --msgbox "Welcome to CSMM one-click installer.\nThis script will ask you a bunch of questions, and then do the final configuration.\nBefore we get started. Make sure you've created a steam app and discord see https://docs.csmm.app/en/csmm/self-host/installation.html#api-keys" ${r} ${c}
+whiptail --title "CSMM One Click Installer" --msgbox "Welcome to CSMM one-click installer.\nThis script will ask you a bunch of questions, and then do the final configuration.\nBefore we get started. Make sure you've created a steam app and discord see https://docs.csmm.app/en/CSMM/self-host/configuration.html#steam-api-key" ${r} ${c}
 
 ( \
   while [ ! -f /etc/csmm_version ]; do sleep 0.5; done \
@@ -71,7 +71,7 @@ while [ -z "$API_KEY_STEAM" ]; do
 done
 
 while [ -z "$DISCORDBOTTOKEN" ]; do
-  DISCORDBOTTOKEN=$(whiptail --inputbox 'Discord Bot Token -- See https://docs.csmm.app/en/csmm/self-host/installation.html#discord-bot-account' --title 'CSMM-Discord Bot Token' ${r} ${c} "${DISCORDBOTTOKEN}" 3>&1 1>&2 2>&3)
+  DISCORDBOTTOKEN=$(whiptail --inputbox 'Discord Bot Token -- See https://docs.csmm.app/en/CSMM/self-host/configuration.html#discord-bot-account' --title 'CSMM-Discord Bot Token' ${r} ${c} "${DISCORDBOTTOKEN}" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus != 0 ]; then
     # handle canceling
@@ -80,7 +80,7 @@ while [ -z "$DISCORDBOTTOKEN" ]; do
 done
 
 while [ -z "$DISCORDCLIENTID" ]; do
-  DISCORDCLIENTID=$(whiptail --inputbox "Discord OAuth Client ID\n\nSee https://docs.csmm.app/en/csmm/self-host/installation.html#discord-bot-account" --title 'CSMM-Discord Client ID' ${r} ${c} "${DISCORDCLIENTID}" 3>&1 1>&2 2>&3)
+  DISCORDCLIENTID=$(whiptail --inputbox "Discord OAuth Client ID\n\nSee https://docs.csmm.app/en/CSMM/self-host/configuration.html#discord-bot-account" --title 'CSMM-Discord Client ID' ${r} ${c} "${DISCORDCLIENTID}" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus != 0 ]; then
     # handle canceling
@@ -89,7 +89,7 @@ while [ -z "$DISCORDCLIENTID" ]; do
 done
 
 while [ -z "$DISCORDCLIENTSECRET" ]; do
-  DISCORDCLIENTSECRET=$(whiptail --inputbox "Discord OAuth Client Secret\n\nSee https://docs.csmm.app/en/csmm/self-host/installation.html#discord-bot-account" --title "CSMM-Discord Client Secret" ${r} ${c} "${DISCORDCLIENTSECRET}" 3>&1 1>&2 2>&3)
+  DISCORDCLIENTSECRET=$(whiptail --inputbox "Discord OAuth Client Secret\n\nSee https://docs.csmm.app/en/CSMM/self-host/configuration.html#discord-bot-account" --title "CSMM-Discord Client Secret" ${r} ${c} "${DISCORDCLIENTSECRET}" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus != 0 ]; then
     # handle canceling
